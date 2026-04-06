@@ -1,0 +1,10 @@
+src/App.module.css
+src/components/BetForm/BetForm.module.css
+src/components/BetHistory/BetHistory.module.css
+src/components/BetHistoryItem/BetHistoryItem.module.css
+src/components/BetResult/BetResult.module.css
+src/components/Button/Button.module.css
+src/components/Card/Card.module.css
+src/components/Header/Header.module.css
+src/components/SelectField/SelectField.module.css
+src/components/TextField/TextField.module.css

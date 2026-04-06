@@ -14,24 +14,6 @@
   }
 }
 
-.placeholder {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  padding: 32px 0;
-  color: #4b5563;
-  font-size: 14px;
-  text-align: center;
-  height: 100%;
-}
-
-.placeholderIcon {
-  font-size: 40px;
-  opacity: 0.5;
-}
-
 .gameLabel {
   font-size: 22px;
   font-weight: 600;
@@ -75,4 +57,19 @@
 .divider {
   height: 1px;
   background: rgba(255, 255, 255, 0.06);
+}
+
+@media (max-width: 768px) {
+  .gameLabel {
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+
+  .stat {
+    padding: 10px 0;
+  }
+
+  .statValue {
+    font-size: 18px;
+  }
 }

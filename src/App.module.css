@@ -22,7 +22,13 @@
 }
 
 @media (max-width: 768px) {
+  .main {
+    padding: 16px;
+    gap: 16px;
+  }
+
   .topRow {
     grid-template-columns: 1fr;
+    gap: 16px;
   }
 }

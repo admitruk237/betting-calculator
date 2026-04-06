@@ -3,6 +3,7 @@ import { GAME_TYPES } from '@/constants/gameTypes'
 import type { GameTypeValue } from '@/constants/gameTypes'
 import { Card } from '@/components/Card/Card'
 import styles from './BetResult.module.css'
+import { EmptyState } from '@/components/ui/EmptyState/EmptyState'
 
 type Props = {
   result: BetResultType | null
@@ -18,10 +19,7 @@ export const BetResult = ({ result, gameType }: Props) => {
       className={result ? styles.active : ''}
     >
       {!result ? (
-        <div className={styles.placeholder}>
-          <span className={styles.placeholderIcon}>🎯</span>
-          <p>Введіть дані для розрахунку</p>
-        </div>
+        <EmptyState message="Введіть дані для розрахунку" />
       ) : (
         <>
           {gameLabel && <div className={styles.gameLabel}>{gameLabel}</div>}
