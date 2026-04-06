@@ -1,20 +1,7 @@
-.form {
-  background: #1a1d2e;
-  border: 1px solid rgba(99, 102, 241, 0.2);
-  border-radius: 16px;
-  padding: 28px;
+.formContainer {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-}
-
-.title {
-  font-size: 18px;
-  font-weight: 700;
-  color: #e2e8f0;
-  padding-bottom: 16px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .field {
@@ -53,12 +40,6 @@
 
 .input::placeholder {
   color: #4b5563;
-}
-
-.input::-webkit-outer-spin-button,
-.input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
 }
 
 .select option {
