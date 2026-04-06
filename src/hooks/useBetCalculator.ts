@@ -1,8 +1,8 @@
 import { useState, useEffect, useMemo, type ChangeEvent } from 'react'
-import { GAME_TYPES, type GameTypeValue } from '../constants/gameTypes'
-import type { FormData, FormErrors, BetResult, BetRecord } from '../types/bet'
-import { validate } from '../utils/validate'
-import { formatDate } from '../utils/formatDate'
+import { GAME_TYPES, type GameTypeValue } from '@/constants/gameTypes'
+import type { FormData, FormErrors, BetResult, BetRecord } from '@/types/bet'
+import { validate } from '@/utils/validate'
+import { formatDate } from '@/utils/formatDate'
 
 const HISTORY_KEY = 'betHistory'
 const MAX_HISTORY = 5

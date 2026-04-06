@@ -1,4 +1,4 @@
-import type { FormData, FormErrors } from '../types/bet'
+import type { FormData, FormErrors } from '@/types/bet'
 
 export const validate = (formData: FormData): FormErrors => {
   const errors: FormErrors = {}
