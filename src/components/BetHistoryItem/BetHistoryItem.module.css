@@ -1,0 +1,70 @@
+.item {
+  background: #0f1117;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: border-color 0.2s, transform 0.2s;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.item:hover {
+  border-color: rgba(99, 102, 241, 0.35);
+  transform: translateX(4px);
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.gameLabel {
+  font-size: 15px;
+  font-weight: 600;
+  color: #e2e8f0;
+}
+
+.date {
+  font-size: 11px;
+  color: #4b5563;
+}
+
+.bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.amount {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.win {
+  font-size: 16px;
+  font-weight: 700;
+  color: #34d399;
+}
+
+.profit {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.profit strong {
+  color: #a78bfa;
+}
