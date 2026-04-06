@@ -1,7 +1,7 @@
-import type { BetResult as BetResultType } from '../../types/bet'
-import { GAME_TYPES } from '../../constants/gameTypes'
-import type { GameTypeValue } from '../../constants/gameTypes'
-import { Card } from '../Card/Card'
+import type { BetResult as BetResultType } from '@/types/bet'
+import { GAME_TYPES } from '@/constants/gameTypes'
+import type { GameTypeValue } from '@/constants/gameTypes'
+import { Card } from '@/components/Card/Card'
 import styles from './BetResult.module.css'
 
 type Props = {
@@ -13,7 +13,10 @@ export const BetResult = ({ result, gameType }: Props) => {
   const gameLabel = GAME_TYPES.find((g) => g.value === gameType)?.label
 
   return (
-    <Card title="Результат" className={result ? styles.active : ''}>
+    <Card
+      title="Результат"
+      className={result ? styles.active : ''}
+    >
       {!result ? (
         <div className={styles.placeholder}>
           <span className={styles.placeholderIcon}>🎯</span>

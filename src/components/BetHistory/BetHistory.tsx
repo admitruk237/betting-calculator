@@ -1,6 +1,7 @@
-import type { BetRecord } from '../../types/bet'
-import { Card } from '../Card/Card'
-import { BetHistoryItem } from '../BetHistoryItem/BetHistoryItem'
+import type { BetRecord } from '@/types/bet'
+import { Card } from '@/components/Card/Card'
+import { Button } from '@/components/Button/Button'
+import { BetHistoryItem } from '@/components/BetHistoryItem/BetHistoryItem'
 import styles from './BetHistory.module.css'
 
 type Props = {
@@ -10,13 +11,13 @@ type Props = {
 
 export const BetHistory = ({ history, onClear }: Props) => {
   const clearButton = history.length > 0 && (
-    <button
+    <Button
       id="clear-history"
-      className={styles.clearButton}
+      variant="destructive"
       onClick={onClear}
     >
       Очистити
-    </button>
+    </Button>
   )
 
   return (
