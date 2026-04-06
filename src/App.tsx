@@ -1,7 +1,8 @@
-import { useBetCalculator } from './hooks/useBetCalculator'
-import { BetForm } from './components/BetForm/BetForm'
-import { BetResult } from './components/BetResult/BetResult'
-import { BetHistory } from './components/BetHistory/BetHistory'
+import { useBetCalculator } from '@/hooks/useBetCalculator'
+import { BetForm } from '@/components/BetForm/BetForm'
+import { BetResult } from '@/components/BetResult/BetResult'
+import { BetHistory } from '@/components/BetHistory/BetHistory'
+import { Header } from '@/components/Header/Header'
 import styles from './App.module.css'
 
 const App = () => {
@@ -17,17 +18,7 @@ const App = () => {
 
   return (
     <div className={styles.app}>
-      <header className={styles.header}>
-        <div className={styles.headerInner}>
-          <span className={styles.logo}>🎰</span>
-          <div>
-            <h1 className={styles.heading}>Betting Calculator</h1>
-            <p className={styles.subheading}>
-              Розрахунок ставок та аналіз прибутку
-            </p>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       <main className={styles.main}>
         <div className={styles.topRow}>
