@@ -1,73 +1,85 @@
-# React + TypeScript + Vite
+# 🎰 Betting Calculator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Інтерактивний React-додаток для розрахунку параметрів ставок із візуалізацією прибутку, підтримкою мультивалютності та темної теми. Проєкт виконано в рамках навчального завдання з упором на чисту архітектуру та надійність коду.
 
-Currently, two official plugins are available:
+![Betting Calculator Preview](https://via.placeholder.com/800x450?text=Betting+Calculator+Preview)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+### 📸 Галерея проєкту
 
-## React Compiler
+| Форма введення | Аналітика прибутку | Історія та тренд |
+| :---: | :---: | :---: |
+| ![Form](./screenshots/screenshot-form.png) | ![Chart](./screenshots/screenshot-chart.png) | ![History](./screenshots/screenshot-history.png) |
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🚀 Технологічний стек
 
-## Expanding the ESLint configuration
+- **Core:** React 18 (Functional Components, Hooks)
+- **Build Tool:** Vite
+- **Language:** TypeScript (повна типізація)
+- **State Management:** Custom Hook (`useBetCalculator`), LocalStorage
+- **Styling:** CSS Modules (Premium Glassmorphism Design)
+- **Visualization:** Recharts (Profit Trend Area Chart)
+- **Testing:** Vitest + React Testing Library
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## ✨ Основні можливості
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- **Real-time розрахунок:** Миттєве оновлення виграшу та прибутку при введенні даних.
+- **Повна валідація:** Суворі перевірки на суму (max 100k) та коефіцієнт (max 1000) з виведенням помилок.
+- **Історія ставок:** Зберігання останніх 5 записів у `localStorage` (FIFO).
+- **Мультивалютність:** Підтримка UAH, USD, EUR з автоматичною нормалізацією для графіку.
+- **Адаптивний дизайн:** Коректне відображення від 320px до 1440px.
+- **Темна/Світла теми:** Автоматичне перемикання та збереження вибору.
+- **Графік прибутку:** Візуалізація успішності останніх ставок з урахуванням валютних курсів.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## 🧪 Тестування
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Проєкт покритий Unit-тестами для перевірки бізнес-логіки:
+- Валідація форм (граничні значення, некоректні типи даних).
+- Форматування даних для графіку та логіка кольорів.
+- Нормалізація валют.
+
+Запуск тестів:
+```bash
+npm run test
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 📦 Встановлення та запуск
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+1. Клонуйте репозиторій:
+```bash
+git clone https://github.com/YOUR_USERNAME/betting-calculator.git
 ```
+
+2. Встановіть залежності:
+```bash
+npm install
+```
+
+3. Запустіть сервер для розробки:
+```bash
+npm run dev
+```
+
+4. Збірка проєкту:
+```bash
+npm run build
+```
+
+## 🏗️ Архітектура
+
+Проєкт побудований за принципом розділення логіки та відображення:
+- `src/components`: UI-компоненти (Dumb components).
+- `src/hooks`: Бізнес-логіка та керування станом (`useBetCalculator`).
+- `src/utils`: Чисті функції для математичних розрахунків та валідації.
+- `src/constants`: Статичні дані (типи ігор, валюти).
+
+---
+
+## 🏆 Виконані бонуси (12/12)
+- [x] **Custom Hook** — вся логіка у `useBetCalculator()`.
+- [x] **Dark / Light Mode** — перемикач теми з підтримкою контексту.
+- [x] **📊 Графік прибутку** — інтеграція Recharts.
+- [x] **💱 Мультивалютність** — конвертація UAH / USD / EUR.
+- [x] **🧪 Тести** — Vitest для валідації та розрахунків.
+- [x] **🧩 TypeScript** — повна типізація всього проєкту.
+
+📅 **Дата здачі:** 07 квітня 2026
