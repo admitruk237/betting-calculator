@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo, type ChangeEvent } from 'react'
 import { GAME_TYPES, type GameTypeValue } from '@/constants/gameTypes'
+import { CURRENCIES } from '@/constants/currencies'
 import type { FormData, FormErrors, BetResult, BetRecord } from '@/types/bet'
 import { validate } from '@/utils/validate'
 import { formatDate } from '@/utils/formatDate'
@@ -12,6 +13,7 @@ export function useBetCalculator() {
     betAmount: '',
     coefficient: '',
     gameType: '',
+    currency: 'UAH',
   })
 
   const [errors, setErrors] = useState<FormErrors>({})
@@ -34,9 +36,10 @@ export function useBetCalculator() {
     const coeff = parseFloat(formData.coefficient)
     if (isNaN(amount) || isNaN(coeff) || amount <= 0 || coeff < 1.01)
       return null
+    const currencySymbol = CURRENCIES.find((c) => c.value === formData.currency)?.symbol ?? '₴'
     const win = amount * coeff
-    return { win, profit: win - amount }
-  }, [formData.betAmount, formData.coefficient])
+    return { win, profit: win - amount, currencySymbol }
+  }, [formData.betAmount, formData.coefficient, formData.currency])
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -55,10 +58,12 @@ export function useBetCalculator() {
 
     const amount = parseFloat(formData.betAmount)
     const coeff = parseFloat(formData.coefficient)
-    const win = amount * coeff
     const gameType = formData.gameType as GameTypeValue
     const gameLabel =
       GAME_TYPES.find((g) => g.value === gameType)?.label ?? gameType
+
+    const currencySymbol = CURRENCIES.find((c) => c.value === formData.currency)?.symbol ?? '₴'
+    const win = amount * coeff
 
     const record: BetRecord = {
       id: Date.now(),
@@ -69,6 +74,8 @@ export function useBetCalculator() {
       gameLabel,
       potentialWin: win,
       profit: win - amount,
+      currency: formData.currency,
+      currencySymbol,
     }
 
     setHistory((prev) => [record, ...prev].slice(0, MAX_HISTORY))

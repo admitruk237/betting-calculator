@@ -1,9 +1,11 @@
 import type { GameTypeValue } from '../constants/gameTypes'
+import type { CurrencyValue } from '../constants/currencies'
 
 export type FormData = {
   betAmount: string
   coefficient: string
   gameType: GameTypeValue | ''
+  currency: CurrencyValue
 }
 
 export type FormErrors = {
@@ -15,6 +17,7 @@ export type FormErrors = {
 export type BetResult = {
   win: number
   profit: number
+  currencySymbol: string
 }
 
 export type BetRecord = {
@@ -26,4 +29,6 @@ export type BetRecord = {
   gameLabel: string
   potentialWin: number
   profit: number
+  currency: CurrencyValue
+  currencySymbol: string
 }
