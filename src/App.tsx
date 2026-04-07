@@ -21,6 +21,7 @@ const App = () => {
       <Header />
 
       <main className={styles.main}>
+        <h2 className={styles.title}>Розрахунок ставок та аналіз прибутку</h2>
         <div className={styles.topRow}>
           <BetForm
             formData={formData}
