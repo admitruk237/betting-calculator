@@ -2,8 +2,9 @@ import type { BetRecord } from '@/types/bet'
 import { Card } from '@/components/Card/Card'
 import { Button } from '@/components/Button/Button'
 import { BetHistoryItem } from '@/components/BetHistoryItem/BetHistoryItem'
-import styles from './BetHistory.module.css'
+import { BetChart } from '@/components/BetChart/BetChart'
 import { EmptyState } from '@/components/ui/EmptyState/EmptyState'
+import styles from './BetHistory.module.css'
 
 type Props = {
   history: BetRecord[]
@@ -36,6 +37,8 @@ export const BetHistory = ({ history, onClear }: Props) => {
               bet={bet}
             />
           ))}
+
+          <BetChart history={history} />
         </div>
       )}
     </Card>
