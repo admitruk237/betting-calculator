@@ -27,14 +27,14 @@ export const BetResult = ({ result, gameType }: Props) => {
             <div className={styles.stat}>
               <span className={styles.statLabel}>Потенційний виграш</span>
               <span className={`${styles.statValue} ${styles.win}`}>
-                {result.win.toFixed(2)} ₴
+                {result.currencySymbol}{result.win.toFixed(2)}
               </span>
             </div>
             <div className={styles.divider} />
             <div className={styles.stat}>
               <span className={styles.statLabel}>Чистий прибуток</span>
               <span className={`${styles.statValue} ${styles.profit}`}>
-                +{result.profit.toFixed(2)} ₴
+                +{result.currencySymbol}{result.profit.toFixed(2)}
               </span>
             </div>
           </div>

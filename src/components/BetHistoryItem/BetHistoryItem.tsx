@@ -1,11 +1,11 @@
 import type { BetRecord } from '@/types/bet'
 import styles from './BetHistoryItem.module.css'
 
-interface BetHistoryItemProps {
+type Props = {
   bet: BetRecord
 }
 
-export function BetHistoryItem({ bet }: BetHistoryItemProps) {
+export function BetHistoryItem({ bet }: Props) {
   return (
     <div className={styles.item}>
       <div className={styles.top}>
@@ -14,12 +14,20 @@ export function BetHistoryItem({ bet }: BetHistoryItemProps) {
       </div>
       <div className={styles.bottom}>
         <span className={styles.amount}>
-          {bet.amount} ₴ × {bet.coefficient}
+          {bet.currencySymbol}
+          {bet.amount} × {bet.coefficient}
         </span>
-        <span className={styles.win}>= {bet.potentialWin.toFixed(2)} ₴</span>
+        <span className={styles.win}>
+          = {bet.currencySymbol}
+          {bet.potentialWin.toFixed(2)}
+        </span>
       </div>
       <div className={styles.profit}>
-        Прибуток: <strong>+{bet.profit.toFixed(2)} ₴</strong>
+        Прибуток:{' '}
+        <strong>
+          +{bet.currencySymbol}
+          {bet.profit.toFixed(2)}
+        </strong>
       </div>
     </div>
   )

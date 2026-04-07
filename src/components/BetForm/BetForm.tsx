@@ -5,6 +5,7 @@ import { Button } from '@/components/Button/Button'
 import { TextField } from '@/components/TextField/TextField'
 import { SelectField } from '@/components/SelectField/SelectField'
 import { GAME_TYPES } from '@/constants/gameTypes'
+import { CURRENCIES } from '@/constants/currencies'
 import styles from './BetForm.module.css'
 
 type Props = {
@@ -20,7 +21,7 @@ export const BetForm = ({ formData, errors, onChange, onSubmit }: Props) => {
       <div className={styles.formContainer}>
         <TextField
           id="betAmount"
-          label="Сума ставки (грн)"
+          label="Сума ставки"
           name="betAmount"
           type="number"
           value={formData.betAmount}
@@ -28,6 +29,23 @@ export const BetForm = ({ formData, errors, onChange, onSubmit }: Props) => {
           error={errors.betAmount}
           placeholder="Наприклад: 500"
         />
+
+        <SelectField
+          id="currency"
+          label="Валюта"
+          name="currency"
+          value={formData.currency}
+          onChange={onChange}
+        >
+          {CURRENCIES.map((c) => (
+            <option
+              key={c.value}
+              value={c.value}
+            >
+              {c.label}
+            </option>
+          ))}
+        </SelectField>
 
         <TextField
           id="coefficient"
@@ -51,13 +69,20 @@ export const BetForm = ({ formData, errors, onChange, onSubmit }: Props) => {
         >
           <option value="">Оберіть тип гри...</option>
           {GAME_TYPES.map((g) => (
-            <option key={g.value} value={g.value}>
+            <option
+              key={g.value}
+              value={g.value}
+            >
               {g.label}
             </option>
           ))}
         </SelectField>
 
-        <Button id="submit-bet" onClick={onSubmit} style={{ marginTop: '4px' }}>
+        <Button
+          id="submit-bet"
+          onClick={onSubmit}
+          style={{ marginTop: '4px' }}
+        >
           Розрахувати та зберегти
         </Button>
       </div>

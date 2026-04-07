@@ -7,10 +7,19 @@ interface Props extends SelectHTMLAttributes<HTMLSelectElement> {
   children: ReactNode
 }
 
-export const SelectField = ({ label, error, id, children, ...props }: Props) => {
+export const SelectField = ({
+  label,
+  error,
+  id,
+  children,
+  ...props
+}: Props) => {
   return (
     <div className={styles.container}>
-      <label htmlFor={id} className={styles.label}>
+      <label
+        htmlFor={id}
+        className={styles.label}
+      >
         {label}
       </label>
       <select
