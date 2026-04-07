@@ -34,9 +34,20 @@ export function useBetCalculator() {
   const result = useMemo<BetResult | null>(() => {
     const amount = parseFloat(formData.betAmount)
     const coeff = parseFloat(formData.coefficient)
-    if (isNaN(amount) || isNaN(coeff) || amount <= 0 || coeff < 1.01)
+
+    if (
+      isNaN(amount) ||
+      isNaN(coeff) ||
+      amount <= 0 ||
+      amount > 100_000 ||
+      coeff < 1.01 ||
+      coeff > 1000
+    ) {
       return null
-    const currencySymbol = CURRENCIES.find((c) => c.value === formData.currency)?.symbol ?? '₴'
+    }
+
+    const currencySymbol =
+      CURRENCIES.find((c) => c.value === formData.currency)?.symbol ?? '₴'
     const win = amount * coeff
     return { win, profit: win - amount, currencySymbol }
   }, [formData.betAmount, formData.coefficient, formData.currency])
@@ -62,7 +73,8 @@ export function useBetCalculator() {
     const gameLabel =
       GAME_TYPES.find((g) => g.value === gameType)?.label ?? gameType
 
-    const currencySymbol = CURRENCIES.find((c) => c.value === formData.currency)?.symbol ?? '₴'
+    const currencySymbol =
+      CURRENCIES.find((c) => c.value === formData.currency)?.symbol ?? '₴'
     const win = amount * coeff
 
     const record: BetRecord = {
