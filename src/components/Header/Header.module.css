@@ -6,13 +6,14 @@
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
   border-bottom: 1px solid var(--border-header);
-  padding: 10px 24px;
   box-shadow: var(--shadow-header);
 }
 
 .headerInner {
   max-width: 1100px;
+  width: 100%;
   margin: 0 auto;
+  padding: 10px 24px;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -54,14 +55,14 @@
   gap: 12px;
   margin-left: auto;
 }
-@media (min-width: 1100px) {
-  .header {
-    padding-left: 60px;
-  }
-}
+
 
 @media (max-width: 768px) {
   .header {
+    padding: 0;
+  }
+
+  .headerInner {
     padding: 8px 16px;
   }
 
