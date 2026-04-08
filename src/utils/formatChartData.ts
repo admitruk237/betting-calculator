@@ -5,33 +5,50 @@ export type ChartDataItem = {
   profit: number
   originalProfit: number
   symbol: string
+  gameIcon?: string
+  dateStr?: string
+  timeStr?: string
+  betData?: BetRecord
 }
 
 export const formatChartData = (
   history: BetRecord[],
-  rates: Record<string, number>
+  rates: Record<string, number>,
 ): ChartDataItem[] => {
-  return [...history].reverse().map((bet, index) => {
-    const rate = rates[bet.currency] || 1
+  const formattedData: ChartDataItem[] = [...history]
+    .reverse()
+    .map((bet, index) => {
+      const rate = rates[bet.currency] || 1
 
-    const normalizedProfit = parseFloat((bet.profit / rate).toFixed(2))
+      const normalizedProfit = parseFloat((bet.profit / rate).toFixed(2))
 
-    return {
-      name: `#${index + 1}`,
-      profit: normalizedProfit,
-      originalProfit: bet.profit,
-      symbol: bet.currencySymbol,
-    }
-  })
-}
+      const [fullDate, timeStr] = bet.date.split(', ')
+      const dateStr = fullDate ? fullDate.substring(0, 5) : ''
+      const gameIcon = bet.gameLabel.split(' ')[0]
 
-export const getChartColor = (data: ChartDataItem[]): string => {
-  if (data.length === 0) return '#8b5cf6'
+      return {
+        name: `#${index + 1}`,
+        profit: normalizedProfit,
+        originalProfit: bet.profit,
+        symbol: bet.currencySymbol,
+        gameIcon,
+        dateStr,
+        timeStr,
+        betData: bet,
+      }
+    })
 
-  const allPositive = data.every((d) => d.profit >= 0)
-  const allNegative = data.every((d) => d.profit < 0)
+  if (formattedData.length === 1 || formattedData.length === 2) {
+    formattedData.unshift({
+      name: '',
+      profit: 0,
+      originalProfit: 0,
+      symbol: formattedData[0].symbol,
+      gameIcon: '',
+      dateStr: '',
+      timeStr: '',
+    })
+  }
 
-  if (allPositive) return '#00ffa3'
-  if (allNegative) return '#ff4d4d'
-  return '#8b5cf6'
+  return formattedData
 }

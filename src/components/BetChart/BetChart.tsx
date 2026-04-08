@@ -10,7 +10,8 @@ import {
   ReferenceLine,
 } from 'recharts'
 import type { BetRecord } from '@/types/bet'
-import { formatChartData, getChartColor } from '@/utils/formatChartData'
+import { formatChartData } from '@/utils/formatChartData'
+import { useMobile } from '@/hooks/useMobile'
 import { ChartTooltip } from './ChartTooltip'
 import styles from './BetChart.module.css'
 
@@ -21,18 +22,52 @@ type Props = {
 
 export const BetChart = ({ history, rates }: Props) => {
   const data = useMemo(() => formatChartData(history, rates), [history, rates])
-  const color = useMemo(() => getChartColor(data), [data])
+  const color = '#10b981'
+
+  const isMobile = useMobile()
+
+  const renderCustomTick = ({
+    x,
+    y,
+    payload,
+  }: {
+    x: string | number
+    y: string | number
+    payload: { value: string }
+  }) => {
+    const item = data.find((d) => d.name === payload.value)
+    if (!item || item.name === '') return null
+
+    return (
+      <g transform={`translate(${x},${y})`}>
+        <text
+          x={0}
+          y={0}
+          dy={isMobile ? 6 : 16}
+          textAnchor="middle"
+          fill="var(--text-muted)"
+          fontSize={12}
+          fontWeight={600}
+        >
+          <tspan>{item.gameIcon}</tspan>
+          <tspan
+            className={styles.hideOnMobile}
+          >{` ${item.dateStr} ${item.timeStr}`}</tspan>
+        </text>
+      </g>
+    )
+  }
 
   return (
     <div className={styles.wrapper}>
       <p className={styles.chartTitle}>Аналітика прибутку</p>
       <ResponsiveContainer
         width="100%"
-        height={300}
+        height={isMobile ? 200 : 300}
       >
         <AreaChart
           data={data}
-          margin={{ top: 20, right: 15, left: 0, bottom: 5 }}
+          margin={{ top: 5, right: isMobile ? 0 : 15, left: 0, bottom: 10 }}
         >
           <defs>
             <linearGradient
@@ -45,12 +80,12 @@ export const BetChart = ({ history, rates }: Props) => {
               <stop
                 offset="5%"
                 stopColor={color}
-                stopOpacity={0.4}
+                stopOpacity={0.5}
               />
               <stop
                 offset="95%"
                 stopColor={color}
-                stopOpacity={0}
+                stopOpacity={0.1}
               />
             </linearGradient>
           </defs>
@@ -71,10 +106,13 @@ export const BetChart = ({ history, rates }: Props) => {
 
           <XAxis
             dataKey="name"
-            tick={{ fill: 'var(--text-muted)', fontSize: 12, fontWeight: 600 }}
+            tick={renderCustomTick}
             axisLine={false}
             tickLine={false}
-            dy={10}
+            dy={isMobile ? 0 : 10}
+            minTickGap={isMobile ? 0 : 50}
+            interval={isMobile ? 0 : 'preserveEnd'}
+            padding={{ right: isMobile ? 15 : 40, left: isMobile ? 10 : 20 }}
           />
           <YAxis
             tick={{ fill: 'var(--text-muted)', fontSize: 12, fontWeight: 600 }}
