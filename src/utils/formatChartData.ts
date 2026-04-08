@@ -1,5 +1,4 @@
 import type { BetRecord } from '@/types/bet'
-import { CURRENCIES } from '@/constants/currencies'
 
 export type ChartDataItem = {
   name: string
@@ -8,10 +7,12 @@ export type ChartDataItem = {
   symbol: string
 }
 
-export const formatChartData = (history: BetRecord[]): ChartDataItem[] => {
+export const formatChartData = (
+  history: BetRecord[],
+  rates: Record<string, number>
+): ChartDataItem[] => {
   return [...history].reverse().map((bet, index) => {
-    const currency = CURRENCIES.find((c) => c.value === bet.currency)
-    const rate = currency ? currency.rate : 1
+    const rate = rates[bet.currency] || 1
 
     const normalizedProfit = parseFloat((bet.profit / rate).toFixed(2))
 
