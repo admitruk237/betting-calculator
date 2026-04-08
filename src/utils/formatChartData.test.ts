@@ -1,19 +1,18 @@
 import { describe, it, expect } from 'vitest'
-import { formatChartData, getChartColor } from '@/utils/formatChartData'
+import { formatChartData } from '@/utils/formatChartData'
 import type { BetRecord } from '@/types/bet'
-import type { ChartDataItem } from '@/utils/formatChartData'
 
 describe('Формування даних для графіку', () => {
   it('Повертає порожній масив для порожньої історії', () => {
     const history: BetRecord[] = []
-    const result = formatChartData(history)
+    const result = formatChartData(history, {})
     expect(result).toEqual([])
   })
   it('Повертає відсортовані дані в зворотньому порядку', () => {
     const history: BetRecord[] = [
       {
         id: 1,
-        date: '2022-01-01',
+        date: '01.01.2022, 12:00',
         amount: 100,
         coefficient: 2,
         gameType: 'football',
@@ -25,7 +24,7 @@ describe('Формування даних для графіку', () => {
       },
       {
         id: 2,
-        date: '2022-01-02',
+        date: '02.01.2022, 12:00',
         amount: 100,
         coefficient: 2,
         gameType: 'football',
@@ -37,7 +36,7 @@ describe('Формування даних для графіку', () => {
       },
       {
         id: 3,
-        date: '2022-01-03',
+        date: '03.01.2022, 12:00',
         amount: 100,
         coefficient: 2,
         gameType: 'football',
@@ -49,82 +48,38 @@ describe('Формування даних для графіку', () => {
       },
     ]
 
-    const result = formatChartData(history)
+    const result = formatChartData(history, {})
     expect(result).toEqual([
       {
         name: '#1',
         profit: 100,
         originalProfit: 100,
         symbol: '₴',
+        gameIcon: 'Футбол',
+        dateStr: '03.01',
+        timeStr: '12:00',
+        betData: history[2],
       },
       {
         name: '#2',
         profit: 100,
         originalProfit: 100,
         symbol: '₴',
+        gameIcon: 'Футбол',
+        dateStr: '02.01',
+        timeStr: '12:00',
+        betData: history[1],
       },
       {
         name: '#3',
         profit: 100,
         originalProfit: 100,
         symbol: '₴',
+        gameIcon: 'Футбол',
+        dateStr: '01.01',
+        timeStr: '12:00',
+        betData: history[0],
       },
     ])
-  })
-})
-
-describe('Визначення кольору графіка', () => {
-  it('Повертає фіолетовий колір для порожнього масиву', () => {
-    const data: ChartDataItem[] = []
-    const result = getChartColor(data)
-    expect(result).toBe('#8b5cf6')
-  })
-  it('Повертає зелений колір для всіх позитивних значень', () => {
-    const data: ChartDataItem[] = [
-      {
-        name: '#1',
-        profit: 100,
-        originalProfit: 100,
-        symbol: '₴',
-      },
-      {
-        name: '#2',
-        profit: 100,
-        originalProfit: 100,
-        symbol: '₴',
-      },
-      {
-        name: '#3',
-        profit: 100,
-        originalProfit: 100,
-        symbol: '₴',
-      },
-    ]
-    const result = getChartColor(data)
-    expect(result).toBe('#00ffa3')
-  })
-  it('Повертає червоний колір для всіх негативних значень', () => {
-    const data: ChartDataItem[] = [
-      {
-        name: '#1',
-        profit: -100,
-        originalProfit: -100,
-        symbol: '₴',
-      },
-      {
-        name: '#2',
-        profit: -100,
-        originalProfit: -100,
-        symbol: '₴',
-      },
-      {
-        name: '#3',
-        profit: -100,
-        originalProfit: -100,
-        symbol: '₴',
-      },
-    ]
-    const result = getChartColor(data)
-    expect(result).toBe('#ff4d4d')
   })
 })
