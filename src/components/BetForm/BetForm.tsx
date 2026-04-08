@@ -1,12 +1,8 @@
 import type { ChangeEvent } from 'react'
 import type { FormData, FormErrors } from '@/types/bet'
-import { Card } from '@/components/Card/Card'
-import { Button } from '@/components/Button/Button'
-import { TextField } from '@/components/TextField/TextField'
-import { SelectField } from '@/components/SelectField/SelectField'
-import { GAME_TYPES } from '@/constants/gameTypes'
-import { CURRENCIES } from '@/constants/currencies'
-import { useCurrencyRates } from '@/hooks/useCurrencyRates'
+import { Card, Button, TextField, SelectField } from '@/components/ui'
+import { GAME_TYPES, CURRENCIES } from '@/constants'
+import { useCurrencyRates } from '@/hooks'
 import styles from './BetForm.module.css'
 
 type Props = {

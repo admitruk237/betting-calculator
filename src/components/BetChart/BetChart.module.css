@@ -1,9 +1,5 @@
 .wrapper {
   margin-top: 16px;
-  background: var(--bg-base);
-  border: 1px solid var(--border-divider);
-  border-radius: 12px;
-
   width: 100%;
 }
 

@@ -1,10 +1,8 @@
 import type { BetRecord } from '@/types/bet'
-import { Card } from '@/components/Card/Card'
-import { Button } from '@/components/Button/Button'
+import { Card, Button, EmptyState } from '@/components/ui'
 import { BetHistoryItem } from '@/components/BetHistoryItem/BetHistoryItem'
 import { BetChart } from '@/components/BetChart/BetChart'
-import { EmptyState } from '@/components/ui/EmptyState/EmptyState'
-import { useCurrencyRates } from '@/hooks/useCurrencyRates'
+import { useCurrencyRates } from '@/hooks'
 import styles from './BetHistory.module.css'
 
 type Props = {

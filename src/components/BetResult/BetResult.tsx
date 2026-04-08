@@ -1,9 +1,7 @@
 import type { BetResult as BetResultType } from '@/types/bet'
-import { GAME_TYPES } from '@/constants/gameTypes'
-import type { GameTypeValue } from '@/constants/gameTypes'
-import { Card } from '@/components/Card/Card'
+import { GAME_TYPES, type GameTypeValue } from '@/constants'
+import { Card, EmptyState } from '@/components/ui'
 import styles from './BetResult.module.css'
-import { EmptyState } from '@/components/ui/EmptyState/EmptyState'
 
 type Props = {
   result: BetResultType | null
@@ -24,19 +22,25 @@ export const BetResult = ({ result, gameType }: Props) => {
         <>
           {gameLabel && <div className={styles.gameLabel}>{gameLabel}</div>}
           <div className={styles.stats}>
-            <div className={styles.stat}>
-              <span className={styles.statLabel}>Потенційний виграш</span>
-              <span className={`${styles.statValue} ${styles.win}`}>
-                {result.currencySymbol}{result.win.toFixed(2)}
-              </span>
-            </div>
+            <Card variant="secondary">
+              <div className={styles.statInner}>
+                <span className={styles.statLabel}>Потенційний виграш</span>
+                <span className={`${styles.statValue} ${styles.win}`}>
+                  {result.currencySymbol}
+                  {result.win.toFixed(2)}
+                </span>
+              </div>
+            </Card>
             <div className={styles.divider} />
-            <div className={styles.stat}>
-              <span className={styles.statLabel}>Чистий прибуток</span>
-              <span className={`${styles.statValue} ${styles.profit}`}>
-                +{result.currencySymbol}{result.profit.toFixed(2)}
-              </span>
-            </div>
+            <Card variant="secondary">
+              <div className={styles.statInner}>
+                <span className={styles.statLabel}>Чистий прибуток</span>
+                <span className={`${styles.statValue} ${styles.profit}`}>
+                  +{result.currencySymbol}
+                  {result.profit.toFixed(2)}
+                </span>
+              </div>
+            </Card>
           </div>
         </>
       )}

@@ -1,11 +1,9 @@
 import { useState, useMemo, type ChangeEvent } from 'react'
-import { GAME_TYPES, type GameTypeValue } from '@/constants/gameTypes'
-import { CURRENCIES } from '@/constants/currencies'
+import { GAME_TYPES, CURRENCIES, type GameTypeValue } from '@/constants'
 import type { FormData, FormErrors, BetResult, BetRecord } from '@/types/bet'
 import { validate } from '@/utils/validate'
 import { formatDate } from '@/utils/formatDate'
-import { useCurrencyRates } from './useCurrencyRates'
-import { useBetHistory } from './useBetHistory'
+import { useCurrencyRates, useBetHistory } from '@/hooks'
 
 export function useBetCalculator() {
   const [formData, setFormData] = useState<FormData>({
@@ -73,11 +71,12 @@ export function useBetCalculator() {
     }
   }
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
     const { name, value } = e.target
     setFieldValue(name as keyof FormData, value)
   }
-
 
   const handleSubmit = () => {
     const newErrors = validate(formData)

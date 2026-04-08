@@ -1,17 +1,8 @@
 import { useMemo } from 'react'
-import {
-  AreaChart,
-  Area,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  ReferenceLine,
-} from 'recharts'
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine } from 'recharts'
 import type { BetRecord } from '@/types/bet'
 import { formatChartData } from '@/utils/formatChartData'
-import { useMobile } from '@/hooks/useMobile'
+import { useMobile } from '@/hooks'
 import { ChartTooltip } from './ChartTooltip'
 import styles from './BetChart.module.css'
 

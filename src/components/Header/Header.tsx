@@ -1,6 +1,5 @@
 import styles from './Header.module.css'
-import { AnimatedIcon } from '@/components/ui/AnimatedIcon/AnimatedIcon'
-import { ThemeToggle } from '@/components/ui/ThemeToggle/ThemeToggle'
+import { AnimatedIcon, ThemeToggle } from '@/components/ui'
 import casinoChip from '@/assets/icons/casino-chip.json'
 
 export const Header = () => {

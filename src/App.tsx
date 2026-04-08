@@ -1,4 +1,4 @@
-import { useBetCalculator } from '@/hooks/useBetCalculator'
+import { useBetCalculator } from '@/hooks'
 import { BetForm } from '@/components/BetForm/BetForm'
 import { BetResult } from '@/components/BetResult/BetResult'
 import { BetHistory } from '@/components/BetHistory/BetHistory'

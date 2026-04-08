@@ -1,4 +1,5 @@
 import type { BetRecord } from '@/types/bet'
+import { Card } from '@/components/ui'
 import styles from './BetHistoryItem.module.css'
 
 type Props = {
@@ -7,7 +8,7 @@ type Props = {
 
 export function BetHistoryItem({ bet }: Props) {
   return (
-    <div className={styles.item}>
+    <Card variant="secondary" className={styles.item}>
       <div className={styles.top}>
         <span className={styles.gameLabel}>{bet.gameLabel}</span>
         <span className={styles.date}>{bet.date}</span>
@@ -29,6 +30,6 @@ export function BetHistoryItem({ bet }: Props) {
           {bet.profit.toFixed(2)}
         </strong>
       </div>
-    </div>
+    </Card>
   )
 }
