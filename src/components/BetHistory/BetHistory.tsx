@@ -4,6 +4,7 @@ import { Button } from '@/components/Button/Button'
 import { BetHistoryItem } from '@/components/BetHistoryItem/BetHistoryItem'
 import { BetChart } from '@/components/BetChart/BetChart'
 import { EmptyState } from '@/components/ui/EmptyState/EmptyState'
+import { useCurrencyRates } from '@/hooks/useCurrencyRates'
 import styles from './BetHistory.module.css'
 
 type Props = {
@@ -12,6 +13,7 @@ type Props = {
 }
 
 export const BetHistory = ({ history, onClear }: Props) => {
+  const { data: rates = {} } = useCurrencyRates()
   const clearButton = history.length > 0 && (
     <Button
       id="clear-history"
@@ -38,7 +40,10 @@ export const BetHistory = ({ history, onClear }: Props) => {
             />
           ))}
 
-          <BetChart history={history} />
+          <BetChart
+            history={history}
+            rates={rates}
+          />
         </div>
       )}
     </Card>

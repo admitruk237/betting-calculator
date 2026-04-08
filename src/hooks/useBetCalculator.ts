@@ -1,12 +1,11 @@
-import { useState, useEffect, useMemo, type ChangeEvent } from 'react'
+import { useState, useMemo, type ChangeEvent } from 'react'
 import { GAME_TYPES, type GameTypeValue } from '@/constants/gameTypes'
 import { CURRENCIES } from '@/constants/currencies'
 import type { FormData, FormErrors, BetResult, BetRecord } from '@/types/bet'
 import { validate } from '@/utils/validate'
 import { formatDate } from '@/utils/formatDate'
-
-const HISTORY_KEY = 'betHistory'
-const MAX_HISTORY = 5
+import { useCurrencyRates } from './useCurrencyRates'
+import { useBetHistory } from './useBetHistory'
 
 export function useBetCalculator() {
   const [formData, setFormData] = useState<FormData>({
@@ -18,18 +17,9 @@ export function useBetCalculator() {
 
   const [errors, setErrors] = useState<FormErrors>({})
 
-  const [history, setHistory] = useState<BetRecord[]>(() => {
-    try {
-      const saved = localStorage.getItem(HISTORY_KEY)
-      return saved ? JSON.parse(saved) : []
-    } catch {
-      return []
-    }
-  })
+  const { data: rates = {} } = useCurrencyRates()
 
-  useEffect(() => {
-    localStorage.setItem(HISTORY_KEY, JSON.stringify(history))
-  }, [history])
+  const { history, addRecord, clearHistory } = useBetHistory()
 
   const result = useMemo<BetResult | null>(() => {
     const amount = parseFloat(formData.betAmount)
@@ -48,14 +38,39 @@ export function useBetCalculator() {
 
     const currencySymbol =
       CURRENCIES.find((c) => c.value === formData.currency)?.symbol ?? '₴'
-    const win = amount * coeff
-    return { win, profit: win - amount, currencySymbol }
+
+    const calculatedWin = amount * coeff
+
+    return {
+      win: calculatedWin,
+      profit: calculatedWin - amount,
+      currencySymbol,
+    }
   }, [formData.betAmount, formData.coefficient, formData.currency])
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target
+
+    if (name === 'currency' && formData.betAmount) {
+      const amount = parseFloat(formData.betAmount)
+      if (!isNaN(amount)) {
+        const oldRate = rates[formData.currency]
+        const newRate = rates[value]
+
+        if (oldRate && newRate) {
+          const convertedAmount = (amount / oldRate) * newRate
+          setFormData((prev) => ({
+            ...prev,
+            betAmount: convertedAmount.toFixed(2),
+            currency: value as (typeof CURRENCIES)[number]['value'],
+          }))
+          return
+        }
+      }
+    }
+
     setFormData((prev) => ({ ...prev, [name]: value }))
     if (errors[name as keyof FormErrors]) {
       setErrors((prev) => ({ ...prev, [name]: undefined }))
@@ -90,10 +105,8 @@ export function useBetCalculator() {
       currencySymbol,
     }
 
-    setHistory((prev) => [record, ...prev].slice(0, MAX_HISTORY))
+    addRecord(record)
   }
-
-  const clearHistory = () => setHistory([])
 
   return {
     formData,

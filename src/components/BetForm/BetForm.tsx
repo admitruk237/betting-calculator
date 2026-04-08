@@ -6,6 +6,7 @@ import { TextField } from '@/components/TextField/TextField'
 import { SelectField } from '@/components/SelectField/SelectField'
 import { GAME_TYPES } from '@/constants/gameTypes'
 import { CURRENCIES } from '@/constants/currencies'
+import { useCurrencyRates } from '@/hooks/useCurrencyRates'
 import styles from './BetForm.module.css'
 
 type Props = {
@@ -15,7 +16,13 @@ type Props = {
   onSubmit: () => void
 }
 
-export const BetForm = ({ formData, errors, onChange, onSubmit }: Props) => {
+export const BetForm = ({
+  formData,
+  errors,
+  onChange,
+  onSubmit,
+}: Props) => {
+  const { isLoading: isRatesLoading, isError: isRatesError } = useCurrencyRates()
   return (
     <Card title="Нова ставка">
       <div className={styles.formContainer}>
@@ -32,10 +39,14 @@ export const BetForm = ({ formData, errors, onChange, onSubmit }: Props) => {
 
         <SelectField
           id="currency"
-          label="Валюта"
+          label={isRatesLoading ? 'Оновлення курсів валют...' : 'Валюта'}
           name="currency"
           value={formData.currency}
           onChange={onChange}
+          error={
+            isRatesError ? 'Курси недоступні, використовуйте UAH' : undefined
+          }
+          disabled={isRatesLoading}
         >
           {CURRENCIES.map((c) => (
             <option

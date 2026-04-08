@@ -16,10 +16,11 @@ import styles from './BetChart.module.css'
 
 type Props = {
   history: BetRecord[]
+  rates: Record<string, number>
 }
 
-export const BetChart = ({ history }: Props) => {
-  const data = useMemo(() => formatChartData(history), [history])
+export const BetChart = ({ history, rates }: Props) => {
+  const data = useMemo(() => formatChartData(history, rates), [history, rates])
   const color = useMemo(() => getChartColor(data), [data])
 
   return (

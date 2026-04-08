@@ -1,7 +1,7 @@
 export const CURRENCIES = [
-  { value: 'UAH', label: '₴ Гривня', symbol: '₴', rate: 1 },
-  { value: 'USD', label: '$ Долар',  symbol: '$', rate: 0.024 },
-  { value: 'EUR', label: '€ Євро',   symbol: '€', rate: 0.022 },
+  { value: 'UAH', label: '₴ Гривня', symbol: '₴' },
+  { value: 'USD', label: '$ Долар',  symbol: '$' },
+  { value: 'EUR', label: '€ Євро',   symbol: '€' },
 ] as const
 
 export type CurrencyValue = (typeof CURRENCIES)[number]['value']
