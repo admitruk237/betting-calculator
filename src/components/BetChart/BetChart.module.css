@@ -3,7 +3,7 @@
   background: var(--bg-base);
   border: 1px solid var(--border-divider);
   border-radius: 12px;
-  padding: 14px 18px;
+
   width: 100%;
 }
 
@@ -12,7 +12,7 @@
 }
 
 .chartTitle {
-  font-size: 11px;
+  font-size: var(--fs-xs);
   font-weight: 700;
   color: var(--text-muted);
   letter-spacing: 1.2px;
@@ -35,7 +35,7 @@
 }
 
 .tooltipLabel {
-  font-size: 10px;
+  font-size: var(--fs-xs);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   color: var(--text-faint);
@@ -50,7 +50,7 @@
   padding-bottom: 6px;
   margin-bottom: 6px;
   border-bottom: 1px solid var(--border-divider);
-  font-size: 12px;
+  font-size: var(--fs-sm);
   font-weight: 700;
   color: var(--text-primary);
 }
@@ -59,7 +59,7 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
-  font-size: 11px;
+  font-size: var(--fs-xs);
   margin-bottom: 4px;
 }
 
@@ -80,7 +80,7 @@
 }
 
 .tooltipRow.profitRow span:last-child {
-  font-size: 13px;
+  font-size: var(--fs-sm);
   font-weight: 800;
 }
 
@@ -92,25 +92,5 @@
   .tooltip {
     padding: 6px 8px;
     border-radius: 8px;
-  }
-
-  .tooltipHeader {
-    font-size: 11px;
-    padding-bottom: 4px;
-    margin-bottom: 4px;
-  }
-
-  .tooltipRow {
-    font-size: 10px;
-    margin-bottom: 2px;
-  }
-
-  .tooltipRow.profitRow {
-    margin-top: 2px;
-    padding-top: 2px;
-  }
-
-  .tooltipRow.profitRow span:last-child {
-    font-size: 11px;
   }
 }

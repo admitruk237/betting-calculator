@@ -12,7 +12,8 @@ import styles from './BetForm.module.css'
 type Props = {
   formData: FormData
   errors: FormErrors
-  onChange: (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void
+  onFieldChange: (name: keyof FormData, value: string) => void
   onSubmit: () => void
 }
 
@@ -20,6 +21,7 @@ export const BetForm = ({
   formData,
   errors,
   onChange,
+  onFieldChange,
   onSubmit,
 }: Props) => {
   const { isLoading: isRatesLoading, isError: isRatesError } = useCurrencyRates()
@@ -40,23 +42,14 @@ export const BetForm = ({
         <SelectField
           id="currency"
           label={isRatesLoading ? 'Оновлення курсів валют...' : 'Валюта'}
-          name="currency"
           value={formData.currency}
-          onChange={onChange}
+          onValueChange={(val) => onFieldChange('currency', val)}
+          options={CURRENCIES}
           error={
             isRatesError ? 'Курси недоступні, використовуйте UAH' : undefined
           }
           disabled={isRatesLoading}
-        >
-          {CURRENCIES.map((c) => (
-            <option
-              key={c.value}
-              value={c.value}
-            >
-              {c.label}
-            </option>
-          ))}
-        </SelectField>
+        />
 
         <TextField
           id="coefficient"
@@ -73,21 +66,12 @@ export const BetForm = ({
         <SelectField
           id="gameType"
           label="Тип гри"
-          name="gameType"
           value={formData.gameType}
-          onChange={onChange}
+          onValueChange={(val) => onFieldChange('gameType', val)}
+          options={GAME_TYPES}
+          placeholder="Оберіть тип гри..."
           error={errors.gameType}
-        >
-          <option value="">Оберіть тип гри...</option>
-          {GAME_TYPES.map((g) => (
-            <option
-              key={g.value}
-              value={g.value}
-            >
-              {g.label}
-            </option>
-          ))}
-        </SelectField>
+        />
 
         <Button
           id="submit-bet"

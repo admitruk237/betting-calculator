@@ -48,11 +48,7 @@ export function useBetCalculator() {
     }
   }, [formData.betAmount, formData.coefficient, formData.currency])
 
-  const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
-  ) => {
-    const { name, value } = e.target
-
+  const setFieldValue = (name: keyof FormData, value: string) => {
     if (name === 'currency' && formData.betAmount) {
       const amount = parseFloat(formData.betAmount)
       if (!isNaN(amount)) {
@@ -76,6 +72,12 @@ export function useBetCalculator() {
       setErrors((prev) => ({ ...prev, [name]: undefined }))
     }
   }
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target
+    setFieldValue(name as keyof FormData, value)
+  }
+
 
   const handleSubmit = () => {
     const newErrors = validate(formData)
@@ -114,6 +116,7 @@ export function useBetCalculator() {
     result,
     history,
     handleChange,
+    setFieldValue,
     handleSubmit,
     clearHistory,
   }

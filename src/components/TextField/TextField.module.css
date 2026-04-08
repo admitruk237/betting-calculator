@@ -6,7 +6,7 @@
 }
 
 .label {
-  font-size: 11px;
+  font-size: var(--fs-xs);
   font-weight: 700;
   color: var(--text-muted);
   letter-spacing: 1.5px;
@@ -20,7 +20,7 @@
   border-radius: 12px;
   padding: 14px 18px;
   color: var(--text-primary);
-  font-size: 16px;
+  font-size: var(--fs-md);
   font-weight: 500;
   width: 100%;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -59,7 +59,7 @@
 }
 
 .errorText {
-  font-size: 11px;
+  font-size: var(--fs-xs);
   color: #f87171;
   display: flex;
   align-items: center;
