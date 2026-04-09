@@ -3,7 +3,7 @@ import lottie, { type AnimationItem } from 'lottie-web'
 
 type Props = {
   src: string | object
-  trigger?: 'hover' | 'loop' | 'click'
+  trigger?: 'hover' | 'loop'
   size?: number
 }
 

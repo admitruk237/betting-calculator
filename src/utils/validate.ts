@@ -5,18 +5,18 @@ export const validate = (formData: FormData): FormErrors => {
   const amount = parseFloat(formData.betAmount)
   const coeff = parseFloat(formData.coefficient)
 
-  if (!formData.betAmount || isNaN(amount)) {
+  if (!formData.betAmount) {
     errors.betAmount = 'Введіть суму ставки'
-  } else if (amount <= 0) {
+  } else if (parseFloat(formData.betAmount) <= 0 || formData.betAmount.startsWith('-')) {
     errors.betAmount = 'Сума повинна бути більше 0'
   } else if (amount > 100_000) {
     errors.betAmount = 'Максимум 100 000'
   }
 
-  if (!formData.coefficient || isNaN(coeff)) {
+  if (!formData.coefficient) {
     errors.coefficient = 'Введіть коефіцієнт'
-  } else if (coeff < 1.01) {
-    errors.coefficient = 'Мінімальний коефіцієнт 1.01'
+  } else if (parseFloat(formData.coefficient) < 1.1 || formData.coefficient.startsWith('-')) {
+    errors.coefficient = 'Мінімальний коефіцієнт 1.1'
   } else if (coeff > 1000) {
     errors.coefficient = 'Максимум 1000'
   }

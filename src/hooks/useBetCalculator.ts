@@ -28,7 +28,7 @@ export function useBetCalculator() {
       isNaN(coeff) ||
       amount <= 0 ||
       amount > 100_000 ||
-      coeff < 1.01 ||
+      coeff < 1.1 ||
       coeff > 1000
     ) {
       return null
@@ -46,6 +46,32 @@ export function useBetCalculator() {
     }
   }, [formData.betAmount, formData.coefficient, formData.currency])
 
+  const updateStateAndValidate = (
+    updates: Partial<FormData>,
+    fieldToUpdateError?: keyof FormData,
+  ) => {
+    setFormData((prev) => {
+      const next = { ...prev, ...updates }
+      const newErrors = validate(next)
+
+      setErrors((prevErrors) => {
+        const nextErrors = { ...prevErrors }
+        if (fieldToUpdateError) {
+          nextErrors[fieldToUpdateError as keyof FormErrors] =
+            newErrors[fieldToUpdateError as keyof FormErrors]
+        } else {
+          Object.keys(updates).forEach((key) => {
+            const k = key as keyof FormErrors
+            nextErrors[k] = newErrors[k]
+          })
+        }
+        return nextErrors
+      })
+
+      return next
+    })
+  }
+
   const setFieldValue = (name: keyof FormData, value: string) => {
     if (name === 'currency' && formData.betAmount) {
       const amount = parseFloat(formData.betAmount)
@@ -55,20 +81,16 @@ export function useBetCalculator() {
 
         if (oldRate && newRate) {
           const convertedAmount = (amount / oldRate) * newRate
-          setFormData((prev) => ({
-            ...prev,
+          updateStateAndValidate({
             betAmount: convertedAmount.toFixed(2),
             currency: value as (typeof CURRENCIES)[number]['value'],
-          }))
+          })
           return
         }
       }
     }
 
-    setFormData((prev) => ({ ...prev, [name]: value }))
-    if (errors[name as keyof FormErrors]) {
-      setErrors((prev) => ({ ...prev, [name]: undefined }))
-    }
+    updateStateAndValidate({ [name]: value }, name)
   }
 
   const handleChange = (

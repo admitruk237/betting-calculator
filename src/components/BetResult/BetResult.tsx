@@ -12,10 +12,7 @@ export const BetResult = ({ result, gameType }: Props) => {
   const gameLabel = GAME_TYPES.find((g) => g.value === gameType)?.label
 
   return (
-    <Card
-      title="Результат"
-      className={result ? styles.active : ''}
-    >
+    <Card title="Результат">
       {!result ? (
         <EmptyState message="Введіть дані для розрахунку" />
       ) : (

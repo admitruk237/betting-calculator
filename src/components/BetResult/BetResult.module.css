@@ -21,29 +21,6 @@
   width: 100%;
 }
 
-.statValue {
-  font-size: var(--fs-xl);
-  font-weight: 800;
-  letter-spacing: -1px;
-  color: var(--text-primary);
-}
-
-.win {
-  color: #10b981;
-  text-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
-}
-
-.profit {
-  color: #10b981;
-  font-size: var(--fs-2xl);
-}
-
-.stat:hover {
-  background: rgba(255, 255, 255, 0.04);
-  transform: translateX(4px);
-  border-color: var(--border-card);
-}
-
 .statLabel {
   font-size: var(--fs-xs);
   color: var(--text-muted);
@@ -59,14 +36,13 @@
   color: var(--text-primary);
 }
 
-.win {
-  color: #10b981;
-  text-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
-}
-
+.win,
 .profit {
   color: #10b981;
-  font-size: var(--fs-lg);
+}
+
+.win {
+  text-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
 }
 
 .divider {
@@ -74,7 +50,7 @@
 }
 
 @media (max-width: 768px) {
-  .stat {
-    padding: 14px 18px;
+  .statInner {
+    padding: 2px 0;
   }
 }

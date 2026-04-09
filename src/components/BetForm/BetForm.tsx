@@ -1,4 +1,4 @@
-import type { ChangeEvent } from 'react'
+import type { ChangeEvent, FormEvent } from 'react'
 import type { FormData, FormErrors } from '@/types/bet'
 import { Card, Button, TextField, SelectField } from '@/components/ui'
 import { GAME_TYPES, CURRENCIES } from '@/constants'
@@ -20,15 +20,25 @@ export const BetForm = ({
   onFieldChange,
   onSubmit,
 }: Props) => {
-  const { isLoading: isRatesLoading, isError: isRatesError } = useCurrencyRates()
+  const { isLoading: isRatesLoading, isError: isRatesError } =
+    useCurrencyRates()
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault()
+    onSubmit()
+  }
+
   return (
     <Card title="Нова ставка">
-      <div className={styles.formContainer}>
+      <form
+        className={styles.formContainer}
+        onSubmit={handleSubmit}
+      >
         <TextField
           id="betAmount"
           label="Сума ставки"
           name="betAmount"
           type="number"
+          min="0"
           value={formData.betAmount}
           onChange={onChange}
           error={errors.betAmount}
@@ -52,6 +62,7 @@ export const BetForm = ({
           label="Коефіцієнт"
           name="coefficient"
           type="number"
+          min="0"
           value={formData.coefficient}
           onChange={onChange}
           error={errors.coefficient}
@@ -71,12 +82,12 @@ export const BetForm = ({
 
         <Button
           id="submit-bet"
-          onClick={onSubmit}
+          type="submit"
           style={{ marginTop: '4px' }}
         >
           Розрахувати та зберегти
         </Button>
-      </div>
+      </form>
     </Card>
   )
 }

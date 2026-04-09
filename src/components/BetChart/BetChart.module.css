@@ -4,7 +4,7 @@
 }
 
 .wrapper *:focus {
-  outline: none !important;
+  outline: none;
 }
 
 .chartTitle {
@@ -28,14 +28,6 @@
   align-items: center;
   gap: 2px;
   backdrop-filter: blur(10px);
-}
-
-.tooltipLabel {
-  font-size: var(--fs-xs);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: var(--text-faint);
-  font-weight: 600;
 }
 
 .tooltipHeader {
