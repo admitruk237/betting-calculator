@@ -1,73 +1,100 @@
-# React + TypeScript + Vite
+# 🎰 Betting Calculator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Професійний React-додаток для розрахунку параметрів ставок із інтерактивною візуалізацією прибутку, підтримкою мультивалютності та сучасною архітектурою. Проєкт розроблено з акцентом на **Visual Excellence** та надійність коду.
 
-Currently, two official plugins are available:
+![Main Preview](./screenshots/screenshot-form.png)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+### 📸 Галерея функціоналу
 
-## React Compiler
+|             Інтерфейс та форми             |              Аналітика прибутку              |                Тренди та історія                 |
+| :----------------------------------------: | :------------------------------------------: | :----------------------------------------------: |
+| ![Form](./screenshots/screenshot-form.png) | ![Chart](./screenshots/screenshot-chart.png) | ![History](./screenshots/screenshot-history.png) |
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 🚀 Технологічний стек
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Frontend Core:** React 19 (Functional Components, modern Hooks)
+- **Build Ecosystem:** Vite 6 + TypeScript (строга типізація)
+- **State & Logic:** Custom Hook Architecture (`useBetCalculator`), LocalStorage persistence
+- **Styling System:** CSS Modules з використанням **Glassmorphism** та динамічних тем
+- **Data Viz:** Recharts (Адаптивні графіки трендів прибутку)
+- **Testing:** Vitest для модульного тестування бізнес-логіки
+- **UI Architecture:** Централізована бібліотека перевикористовуваних компонентів (`src/components/ui`)
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## ✨ Ключові можливості
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- **⚡ Real-time Calculation:** Миттєве оновлення виграшу та маржі без перезавантаження.
+- **🛡️ Smart Validation:** Багаторівнева перевірка вводу (ліміти до 100 000 одиниць, коректність коефіцієнтів).
+- **💾 Persistent History:** Локальне збереження останніх 5 ставок за принципом FIFO.
+- **🌐 Multi-currency Support:** Робота з UAH, USD, EUR з автоматичною конвертацією для єдиної аналітики на графіку.
+- **🌓 Dynamic Theme:** Тулбар для перемикання тем (Light/Dark mode) із запам'ятовуванням вибору користувача.
+- **📊 Profit Analytics:** Візуальний тренд прибутку, що дозволяє оцінити успішність ігрової стратегії.
+
+---
+
+## 🧪 Тестування
+
+Проєкт покритий Unit-тестами (Vitest), що гарантують стабільність розрахунків:
+
+- Валідація форм.
+- Форматування даних для аналітики.
+- Логіка конвертації валют.
+
+**Запуск тестів:**
+
+```bash
+npm run test
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 📦 Встановлення та запуск
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 1. Підготовка середовища
+
+Клонуйте репозиторій та перейдіть у папку проєкт:
+
+```bash
+git clone https://github.com/admitruk237/betting-calculator.git
+cd betting-calculator
 ```
+
+### 2. Встановлення залежностей
+
+```bash
+npm install
+```
+
+### 3. Запуск у режимі розробки
+
+```bash
+npm run dev
+```
+
+Додаток буде доступний за адресою: `http://localhost:5173`
+
+### 4. Збірка для Production
+
+```bash
+npm run build
+```
+
+---
+
+## 🏗️ Структура проєкту
+
+Проєкт реалізовано за модульним принципом:
+
+- **/src/components/ui** — "Атомарні" UI-компоненти (Button, Card, TextField).
+- **/src/hooks** — Кастомні хуки для відокремлення бізнес-логіки від UI.
+- **/src/context** — Контексти для глобальних станів (напр. ThemeContext).
+- **/src/utils** — Чисті функції для математичних розрахунків.
+- **/src/types** — Глобальні інтерфейси TypeScript.
+
+---
+
+📅 **Оновлено:** 08 квітня 2026
+👨‍💻 **Автор:** admitruk237

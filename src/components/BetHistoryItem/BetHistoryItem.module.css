@@ -1,0 +1,60 @@
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.gameLabel {
+  font-size: var(--fs-md);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.date {
+  font-size: var(--fs-xs);
+  color: var(--text-faint);
+}
+
+.bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.amount {
+  font-size: var(--fs-base);
+  color: var(--text-muted);
+}
+
+.win {
+  font-size: var(--fs-md);
+  font-weight: 700;
+  color: #34d399;
+}
+
+.profit {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+}
+
+.profit strong {
+  color: #a78bfa;
+}

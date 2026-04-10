@@ -1,0 +1,56 @@
+.gameLabel {
+  font-size: var(--fs-xl);
+  font-weight: 800;
+  margin-bottom: 24px;
+  text-align: center;
+  color: var(--text-primary);
+  letter-spacing: -1px;
+}
+
+.stats {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.statInner {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.statLabel {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+.statValue {
+  font-size: var(--fs-lg);
+  font-weight: 800;
+  letter-spacing: -1px;
+  color: var(--text-primary);
+}
+
+.win,
+.profit {
+  color: #10b981;
+}
+
+.win {
+  text-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+}
+
+.divider {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .statInner {
+    padding: 2px 0;
+  }
+}

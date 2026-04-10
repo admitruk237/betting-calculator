@@ -1,0 +1,84 @@
+.wrapper {
+  margin-top: 16px;
+  width: 100%;
+}
+
+.wrapper *:focus {
+  outline: none;
+}
+
+.chartTitle {
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.tooltip {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-card);
+  padding: 8px 12px;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  backdrop-filter: blur(10px);
+}
+
+.tooltipHeader {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  padding-bottom: 6px;
+  margin-bottom: 6px;
+  border-bottom: 1px solid var(--border-divider);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.tooltipRow {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  font-size: var(--fs-xs);
+  margin-bottom: 4px;
+}
+
+.tooltipRow.profitRow {
+  margin-top: 4px;
+  padding-top: 4px;
+  border-top: 1px dashed var(--border-divider);
+}
+
+.tooltipRow span:first-child {
+  color: var(--text-muted);
+  margin-right: 16px;
+}
+
+.tooltipRow span:last-child {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.tooltipRow.profitRow span:last-child {
+  font-size: var(--fs-sm);
+  font-weight: 800;
+}
+
+@media (max-width: 600px) {
+  .hideOnMobile {
+    display: none;
+  }
+
+  .tooltip {
+    padding: 6px 8px;
+    border-radius: 8px;
+  }
+}
