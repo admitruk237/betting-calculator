@@ -32,6 +32,7 @@ export const BetForm = ({
       <form
         className={styles.formContainer}
         onSubmit={handleSubmit}
+        noValidate
       >
         <TextField
           id="betAmount"
@@ -39,6 +40,7 @@ export const BetForm = ({
           name="betAmount"
           type="number"
           min="0"
+          step={0.01}
           value={formData.betAmount}
           onChange={onChange}
           error={errors.betAmount}
