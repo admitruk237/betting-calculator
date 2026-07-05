@@ -32,6 +32,7 @@ export const BetForm = ({
       <form
         className={styles.formContainer}
         onSubmit={handleSubmit}
+        noValidate
       >
         <TextField
           id="betAmount"
