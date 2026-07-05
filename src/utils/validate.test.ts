@@ -40,7 +40,7 @@ describe('Валідація форми вставки', () => {
     const errors = validate(formData)
     expect(errors.betAmount).toBe('Максимум 100 000')
   })
-  it('Повинна повертати помилку якщо коефіцієнт менше 1.01', () => {
+  it('Повинна повертати помилку якщо коефіцієнт менше 1.1', () => {
     const formData: FormData = {
       betAmount: '100',
       coefficient: '1.00',
@@ -48,7 +48,7 @@ describe('Валідація форми вставки', () => {
       currency: 'UAH',
     }
     const errors = validate(formData)
-    expect(errors.coefficient).toBe('Мінімальний коефіцієнт 1.01')
+    expect(errors.coefficient).toBe('Мінімальний коефіцієнт 1.1')
   })
   it('Повинна повертати помилку якщо коефіцієнт більше 1000', () => {
     const formData: FormData = {
