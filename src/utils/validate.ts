@@ -1,4 +1,5 @@
 import type { FormData, FormErrors } from '@/types/bet'
+import { BET_LIMITS, VALIDATION_MESSAGES } from '@/constants'
 
 export const validate = (formData: FormData): FormErrors => {
   const errors: FormErrors = {}
@@ -6,23 +7,23 @@ export const validate = (formData: FormData): FormErrors => {
   const coeff = parseFloat(formData.coefficient)
 
   if (!formData.betAmount || isNaN(amount)) {
-    errors.betAmount = 'Введіть суму ставки'
-  } else if (amount <= 0 || formData.betAmount.startsWith('-')) {
-    errors.betAmount = 'Сума повинна бути більше 0'
-  } else if (amount > 100_000) {
-    errors.betAmount = 'Максимум 100 000'
+    errors.betAmount = VALIDATION_MESSAGES.AMOUNT_REQUIRED
+  } else if (amount <= 0) {
+    errors.betAmount = VALIDATION_MESSAGES.AMOUNT_POSITIVE
+  } else if (amount > BET_LIMITS.MAX_AMOUNT) {
+    errors.betAmount = VALIDATION_MESSAGES.AMOUNT_MAX
   }
 
   if (!formData.coefficient || isNaN(coeff)) {
-    errors.coefficient = 'Введіть коефіцієнт'
-  } else if (coeff < 1.1 || formData.coefficient.startsWith('-')) {
-    errors.coefficient = 'Мінімальний коефіцієнт 1.1'
-  } else if (coeff > 1000) {
-    errors.coefficient = 'Максимум 1000'
+    errors.coefficient = VALIDATION_MESSAGES.COEFFICIENT_REQUIRED
+  } else if (coeff < BET_LIMITS.MIN_COEFFICIENT) {
+    errors.coefficient = VALIDATION_MESSAGES.COEFFICIENT_MIN
+  } else if (coeff > BET_LIMITS.MAX_COEFFICIENT) {
+    errors.coefficient = VALIDATION_MESSAGES.COEFFICIENT_MAX
   }
 
   if (!formData.gameType) {
-    errors.gameType = 'Оберіть тип гри'
+    errors.gameType = VALIDATION_MESSAGES.GAME_TYPE_REQUIRED
   }
 
   return errors

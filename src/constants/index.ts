@@ -1,2 +1,7 @@
 export * from './currencies'
 export * from './gameTypes'
+export * from './bet'
+export * from './storage'
+export * from './api'
+export * from './layout'
+export * from './texts'

@@ -1,4 +1,5 @@
 import type { ChartDataItem } from '@/utils/formatChartData'
+import { CHART_TEXTS } from '@/constants'
 import styles from './BetChart.module.css'
 
 type Props = {
@@ -21,30 +22,26 @@ export const ChartTooltip = ({ active, payload }: Props) => {
             {dateStr} {timeStr}
           </span>
         </div>
-
         <div className={styles.tooltipRow}>
-          <span>Ставка:</span>
+          <span>{CHART_TEXTS.BET_LABEL}</span>
           <span>
             {betData.currencySymbol}
             {betData.amount}
           </span>
         </div>
-
         <div className={styles.tooltipRow}>
-          <span>Коефіцієнт:</span>
+          <span>{CHART_TEXTS.COEFFICIENT_LABEL}</span>
           <span>x{betData.coefficient}</span>
         </div>
-
         <div className={styles.tooltipRow}>
-          <span>Виграш:</span>
+          <span>{CHART_TEXTS.WIN_LABEL}</span>
           <span>
             {betData.currencySymbol}
             {betData.potentialWin}
           </span>
         </div>
-
         <div className={`${styles.tooltipRow} ${styles.profitRow}`}>
-          <span>Прибуток:</span>
+          <span>{CHART_TEXTS.PROFIT_LABEL}</span>
           <span>
             {betData.currencySymbol}
             {betData.profit.toFixed(2)}

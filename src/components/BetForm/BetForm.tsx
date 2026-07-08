@@ -1,9 +1,19 @@
 import type { ChangeEvent, FormEvent } from 'react'
 import type { FormData, FormErrors } from '@/types/bet'
 import { Card, Button, TextField, SelectField } from '@/components/ui'
-import { GAME_TYPES, CURRENCIES } from '@/constants'
+import {
+  GAME_TYPES,
+  CURRENCIES,
+  formatGameTypeLabel,
+  BET_FORM_TEXTS,
+} from '@/constants'
 import { useCurrencyRates } from '@/hooks'
 import styles from './BetForm.module.css'
+
+const GAME_TYPE_OPTIONS = GAME_TYPES.map((gameType) => ({
+  value: gameType.value,
+  label: formatGameTypeLabel(gameType),
+}))
 
 type Props = {
   formData: FormData
@@ -28,7 +38,7 @@ export const BetForm = ({
   }
 
   return (
-    <Card title="Нова ставка">
+    <Card title={BET_FORM_TEXTS.CARD_TITLE}>
       <form
         className={styles.formContainer}
         onSubmit={handleSubmit}
@@ -36,7 +46,7 @@ export const BetForm = ({
       >
         <TextField
           id="betAmount"
-          label="Сума ставки"
+          label={BET_FORM_TEXTS.AMOUNT_LABEL}
           name="betAmount"
           type="number"
           min="0"
@@ -44,50 +54,48 @@ export const BetForm = ({
           value={formData.betAmount}
           onChange={onChange}
           error={errors.betAmount}
-          placeholder="Наприклад: 500"
+          placeholder={BET_FORM_TEXTS.AMOUNT_PLACEHOLDER}
         />
-
         <SelectField
           id="currency"
-          label={isRatesLoading ? 'Оновлення курсів валют...' : 'Валюта'}
+          label={
+            isRatesLoading
+              ? BET_FORM_TEXTS.CURRENCY_LOADING_LABEL
+              : BET_FORM_TEXTS.CURRENCY_LABEL
+          }
           value={formData.currency}
           onValueChange={(val) => onFieldChange('currency', val)}
           options={CURRENCIES}
-          error={
-            isRatesError ? 'Курси недоступні, використовуйте UAH' : undefined
-          }
+          error={isRatesError ? BET_FORM_TEXTS.CURRENCY_ERROR : undefined}
           disabled={isRatesLoading}
         />
-
         <TextField
           id="coefficient"
-          label="Коефіцієнт"
+          label={BET_FORM_TEXTS.COEFFICIENT_LABEL}
           name="coefficient"
           type="number"
           min="0"
           value={formData.coefficient}
           onChange={onChange}
           error={errors.coefficient}
-          placeholder="Наприклад: 2.5"
+          placeholder={BET_FORM_TEXTS.COEFFICIENT_PLACEHOLDER}
           step={0.01}
         />
-
         <SelectField
           id="gameType"
-          label="Тип гри"
+          label={BET_FORM_TEXTS.GAME_TYPE_LABEL}
           value={formData.gameType}
           onValueChange={(val) => onFieldChange('gameType', val)}
-          options={GAME_TYPES}
-          placeholder="Оберіть тип гри..."
+          options={GAME_TYPE_OPTIONS}
+          placeholder={BET_FORM_TEXTS.GAME_TYPE_PLACEHOLDER}
           error={errors.gameType}
         />
-
         <Button
           id="submit-bet"
           type="submit"
-          style={{ marginTop: '4px' }}
+          className={styles.submitButton}
         >
-          Розрахувати та зберегти
+          {BET_FORM_TEXTS.SUBMIT}
         </Button>
       </form>
     </Card>

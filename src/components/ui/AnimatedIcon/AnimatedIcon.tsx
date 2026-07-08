@@ -1,5 +1,6 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, type CSSProperties } from 'react'
 import lottie, { type AnimationItem } from 'lottie-web'
+import styles from './AnimatedIcon.module.css'
 
 type Props = {
   src: string | object
@@ -41,17 +42,16 @@ export const AnimatedIcon = ({ src, trigger = 'loop', size = 32 }: Props) => {
     }
   }, [src, trigger])
 
+  const dynamicStyle = {
+    '--icon-size': `${size}px`,
+    '--icon-cursor': trigger === 'hover' ? 'pointer' : 'default',
+  } as CSSProperties
+
   return (
     <div
       ref={containerRef}
-      style={{
-        width: `${size}px`,
-        height: `${size}px`,
-        cursor: trigger === 'hover' ? 'pointer' : 'default',
-        display: 'inline-flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
+      className={styles.icon}
+      style={dynamicStyle}
     />
   )
 }

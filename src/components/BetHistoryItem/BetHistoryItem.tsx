@@ -1,5 +1,6 @@
 import type { BetRecord } from '@/types/bet'
 import { Card } from '@/components/ui'
+import { BET_HISTORY_TEXTS } from '@/constants'
 import styles from './BetHistoryItem.module.css'
 
 type Props = {
@@ -24,7 +25,7 @@ export function BetHistoryItem({ bet }: Props) {
         </span>
       </div>
       <div className={styles.profit}>
-        Прибуток:{' '}
+        {BET_HISTORY_TEXTS.PROFIT_LABEL}{' '}
         <strong>
           +{bet.currencySymbol}
           {bet.profit.toFixed(2)}

@@ -1,4 +1,5 @@
 export * from './useBetCalculator'
 export * from './useBetHistory'
 export * from './useCurrencyRates'
-export * from './useMobile'
+export * from './useIsMobile'
+export * from './useThemeState'

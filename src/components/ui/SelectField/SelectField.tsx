@@ -2,7 +2,7 @@ import * as Select from '@radix-ui/react-select'
 import { ChevronDown, Check } from 'lucide-react'
 import styles from './SelectField.module.css'
 
-export interface SelectOption {
+interface SelectOption {
   value: string
   label: string
 }
@@ -25,18 +25,24 @@ export const SelectField = ({
   options,
   placeholder,
   error,
+  id,
   disabled,
 }: Props) => {
   return (
     <div className={styles.container}>
-      <label className={styles.label}>{label}</label>
-
+      <label
+        className={styles.label}
+        htmlFor={id}
+      >
+        {label}
+      </label>
       <Select.Root
         value={value}
         onValueChange={onValueChange}
         disabled={disabled}
       >
         <Select.Trigger
+          id={id}
           className={`${styles.trigger} ${error ? styles.triggerError : ''}`}
         >
           <Select.Value placeholder={placeholder} />
@@ -44,7 +50,6 @@ export const SelectField = ({
             <ChevronDown size={18} />
           </Select.Icon>
         </Select.Trigger>
-
         <Select.Portal>
           <Select.Content
             className={styles.content}
@@ -68,7 +73,6 @@ export const SelectField = ({
           </Select.Content>
         </Select.Portal>
       </Select.Root>
-
       {error && <span className={styles.errorText}>{error}</span>}
     </div>
   )

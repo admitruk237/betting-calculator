@@ -1,4 +1,5 @@
 import { useBetCalculator } from '@/hooks'
+import { APP_TEXTS } from '@/constants'
 import { BetForm } from '@/components/BetForm/BetForm'
 import { BetResult } from '@/components/BetResult/BetResult'
 import { BetHistory } from '@/components/BetHistory/BetHistory'
@@ -20,9 +21,8 @@ const App = () => {
   return (
     <div className={styles.app}>
       <Header />
-
       <main className={styles.main}>
-        <h2 className={styles.title}>Розрахунок ставок та аналіз прибутку</h2>
+        <h2 className={styles.title}>{APP_TEXTS.TITLE}</h2>
         <div className={styles.topRow}>
           <BetForm
             formData={formData}

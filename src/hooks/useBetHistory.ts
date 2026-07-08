@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react'
 import type { BetRecord } from '@/types/bet'
+import { STORAGE_KEYS } from '@/constants'
 
-const HISTORY_KEY = 'betHistory'
 const MAX_HISTORY = 5
 
 export function useBetHistory() {
   const [history, setHistory] = useState<BetRecord[]>(() => {
     try {
-      const saved = localStorage.getItem(HISTORY_KEY)
+      const saved = localStorage.getItem(STORAGE_KEYS.BET_HISTORY)
       return saved ? JSON.parse(saved) : []
     } catch {
       return []
@@ -15,7 +15,7 @@ export function useBetHistory() {
   })
 
   useEffect(() => {
-    localStorage.setItem(HISTORY_KEY, JSON.stringify(history))
+    localStorage.setItem(STORAGE_KEYS.BET_HISTORY, JSON.stringify(history))
   }, [history])
 
   const addRecord = (record: BetRecord) => {
