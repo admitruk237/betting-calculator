@@ -8,3 +8,5 @@ export const THEME = {
   DARK: 'dark',
   LIGHT: 'light',
 } as const
+
+export const THEME_TRANSITION_DURATION_MS = 700
