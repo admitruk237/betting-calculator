@@ -1,21 +1,32 @@
 import { useState, useMemo, type ChangeEvent } from 'react'
-import { GAME_TYPES, CURRENCIES, type GameTypeValue } from '@/constants'
+import {
+  GAME_TYPES,
+  BET_LIMITS,
+  DEFAULT_CURRENCY,
+  isCurrencyValue,
+  formatGameTypeLabel,
+  type GameTypeValue,
+  type CurrencyValue,
+} from '@/constants'
 import type { FormData, FormErrors, BetResult, BetRecord } from '@/types/bet'
 import { validate } from '@/utils/validate'
 import { formatDate } from '@/utils/formatDate'
-import { useCurrencyRates, useBetHistory } from '@/hooks'
+import { calculateBetResult } from '@/utils/calculateBetResult'
+import { useCurrencyRates } from './useCurrencyRates'
+import { useBetHistory } from './useBetHistory'
 
 export function useBetCalculator() {
   const [formData, setFormData] = useState<FormData>({
     betAmount: '',
     coefficient: '',
     gameType: '',
-    currency: 'UAH',
+    currency: DEFAULT_CURRENCY,
   })
 
   const [errors, setErrors] = useState<FormErrors>({})
 
-  const { data: rates = {} } = useCurrencyRates()
+  const { data: rates = {} as Partial<Record<CurrencyValue, number>> } =
+    useCurrencyRates()
 
   const { history, addRecord, clearHistory } = useBetHistory()
 
@@ -27,53 +38,41 @@ export function useBetCalculator() {
       isNaN(amount) ||
       isNaN(coeff) ||
       amount <= 0 ||
-      amount > 100_000 ||
-      coeff < 1.1 ||
-      coeff > 1000
+      amount > BET_LIMITS.MAX_AMOUNT ||
+      coeff < BET_LIMITS.MIN_COEFFICIENT ||
+      coeff > BET_LIMITS.MAX_COEFFICIENT
     ) {
       return null
     }
 
-    const currencySymbol =
-      CURRENCIES.find((c) => c.value === formData.currency)?.symbol ?? '₴'
-
-    const calculatedWin = amount * coeff
-
-    return {
-      win: calculatedWin,
-      profit: calculatedWin - amount,
-      currencySymbol,
-    }
+    return calculateBetResult(amount, coeff, formData.currency)
   }, [formData.betAmount, formData.coefficient, formData.currency])
 
   const updateStateAndValidate = (
     updates: Partial<FormData>,
     fieldToUpdateError?: keyof FormData,
   ) => {
-    setFormData((prev) => {
-      const next = { ...prev, ...updates }
-      const newErrors = validate(next)
+    const next = { ...formData, ...updates }
+    const newErrors = validate(next)
 
-      setErrors((prevErrors) => {
-        const nextErrors = { ...prevErrors }
-        if (fieldToUpdateError) {
-          nextErrors[fieldToUpdateError as keyof FormErrors] =
-            newErrors[fieldToUpdateError as keyof FormErrors]
-        } else {
-          Object.keys(updates).forEach((key) => {
-            const k = key as keyof FormErrors
-            nextErrors[k] = newErrors[k]
-          })
-        }
-        return nextErrors
-      })
-
-      return next
+    setFormData(next)
+    setErrors((prevErrors) => {
+      const nextErrors = { ...prevErrors }
+      if (fieldToUpdateError) {
+        nextErrors[fieldToUpdateError as keyof FormErrors] =
+          newErrors[fieldToUpdateError as keyof FormErrors]
+      } else {
+        Object.keys(updates).forEach((key) => {
+          const k = key as keyof FormErrors
+          nextErrors[k] = newErrors[k]
+        })
+      }
+      return nextErrors
     })
   }
 
   const setFieldValue = (name: keyof FormData, value: string) => {
-    if (name === 'currency' && formData.betAmount) {
+    if (name === 'currency' && formData.betAmount && isCurrencyValue(value)) {
       const amount = parseFloat(formData.betAmount)
       if (!isNaN(amount)) {
         const oldRate = rates[formData.currency]
@@ -83,7 +82,7 @@ export function useBetCalculator() {
           const convertedAmount = (amount / oldRate) * newRate
           updateStateAndValidate({
             betAmount: convertedAmount.toFixed(2),
-            currency: value as (typeof CURRENCIES)[number]['value'],
+            currency: value,
           })
           return
         }
@@ -108,12 +107,14 @@ export function useBetCalculator() {
     const amount = parseFloat(formData.betAmount)
     const coeff = parseFloat(formData.coefficient)
     const gameType = formData.gameType as GameTypeValue
-    const gameLabel =
-      GAME_TYPES.find((g) => g.value === gameType)?.label ?? gameType
+    const gameTypeConfig = GAME_TYPES.find((g) => g.value === gameType)
+    const gameLabel = gameTypeConfig ? formatGameTypeLabel(gameTypeConfig) : gameType
 
-    const currencySymbol =
-      CURRENCIES.find((c) => c.value === formData.currency)?.symbol ?? '₴'
-    const win = amount * coeff
+    const { win, profit, currencySymbol } = calculateBetResult(
+      amount,
+      coeff,
+      formData.currency,
+    )
 
     const record: BetRecord = {
       id: Date.now(),
@@ -123,7 +124,7 @@ export function useBetCalculator() {
       gameType,
       gameLabel,
       potentialWin: win,
-      profit: win - amount,
+      profit,
       currency: formData.currency,
       currencySymbol,
     }

@@ -1,15 +1,13 @@
 export const GAME_TYPES = [
-  { value: 'football', label: '⚽ Футбол' },
-  { value: 'basketball', label: '🏀 Баскетбол' },
-  { value: 'tennis', label: '🎾 Теніс' },
-  { value: 'slots', label: '🎰 Слоти' },
-  { value: 'poker', label: '🃏 Покер' },
-  { value: 'roulette', label: '🎲 Рулетка' },
+  { value: 'football', icon: '⚽', label: 'Футбол' },
+  { value: 'basketball', icon: '🏀', label: 'Баскетбол' },
+  { value: 'tennis', icon: '🎾', label: 'Теніс' },
+  { value: 'slots', icon: '🎰', label: 'Слоти' },
+  { value: 'poker', icon: '🃏', label: 'Покер' },
+  { value: 'roulette', icon: '🎲', label: 'Рулетка' },
 ] as const
 
 export type GameTypeValue = (typeof GAME_TYPES)[number]['value']
 
-export interface GameType {
-  value: GameTypeValue
-  label: string
-}
+export const formatGameTypeLabel = (gameType: (typeof GAME_TYPES)[number]): string =>
+  `${gameType.icon} ${gameType.label}`

@@ -1,21 +1,26 @@
 import { useMemo } from 'react'
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine } from 'recharts'
 import type { BetRecord } from '@/types/bet'
+import { CHART_TEXTS, type CurrencyValue } from '@/constants'
 import { formatChartData } from '@/utils/formatChartData'
-import { useMobile } from '@/hooks'
+import { useIsMobile } from '@/hooks'
 import { ChartTooltip } from './ChartTooltip'
+import { CHART_CONFIG } from './chartConfig'
 import styles from './BetChart.module.css'
 
 type Props = {
   history: BetRecord[]
-  rates: Record<string, number>
+  rates: Partial<Record<CurrencyValue, number>>
 }
 
 export const BetChart = ({ history, rates }: Props) => {
-  const data = useMemo(() => formatChartData(history, rates), [history, rates])
-  const color = '#10b981'
+  const chartData = useMemo(
+    () => formatChartData(history, rates),
+    [history, rates],
+  )
+  const color = 'var(--accent-primary)'
 
-  const isMobile = useMobile()
+  const isMobile = useIsMobile()
 
   const renderCustomTick = ({
     x,
@@ -26,7 +31,7 @@ export const BetChart = ({ history, rates }: Props) => {
     y: string | number
     payload: { value: string }
   }) => {
-    const item = data.find((d) => d.name === payload.value)
+    const item = chartData.find((d) => d.name === payload.value)
     if (!item || item.name === '') return null
 
     return (
@@ -37,7 +42,7 @@ export const BetChart = ({ history, rates }: Props) => {
           dy={isMobile ? 6 : 16}
           textAnchor="middle"
           fill="var(--text-muted)"
-          fontSize={12}
+          fontSize={CHART_CONFIG.TICK_FONT_SIZE}
           fontWeight={600}
         >
           <tspan>{item.gameIcon}</tspan>
@@ -51,13 +56,13 @@ export const BetChart = ({ history, rates }: Props) => {
 
   return (
     <div className={styles.wrapper}>
-      <p className={styles.chartTitle}>Аналітика прибутку</p>
+      <p className={styles.chartTitle}>{CHART_TEXTS.TITLE}</p>
       <ResponsiveContainer
         width="100%"
-        height={isMobile ? 200 : 300}
+        height={isMobile ? CHART_CONFIG.HEIGHT_MOBILE : CHART_CONFIG.HEIGHT_DESKTOP}
       >
         <AreaChart
-          data={data}
+          data={chartData}
           margin={{ top: 5, right: isMobile ? 0 : 15, left: 0, bottom: 10 }}
         >
           <defs>
@@ -80,57 +85,66 @@ export const BetChart = ({ history, rates }: Props) => {
               />
             </linearGradient>
           </defs>
-
           <CartesianGrid
             strokeDasharray="4 4"
             stroke="var(--text-primary)"
             strokeOpacity={0.2}
             vertical={false}
           />
-
           <ReferenceLine
             y={0}
             stroke="var(--text-primary)"
             strokeOpacity={1}
             strokeWidth={1.5}
           />
-
           <XAxis
             dataKey="name"
             tick={renderCustomTick}
             axisLine={false}
             tickLine={false}
             dy={isMobile ? 0 : 10}
-            minTickGap={isMobile ? 0 : 50}
+            minTickGap={isMobile ? 0 : CHART_CONFIG.MIN_TICK_GAP}
             interval={isMobile ? 0 : 'preserveEnd'}
             padding={{ right: isMobile ? 15 : 40, left: isMobile ? 10 : 20 }}
           />
           <YAxis
-            tick={{ fill: 'var(--text-muted)', fontSize: 12, fontWeight: 600 }}
+            tick={{
+              fill: 'var(--text-muted)',
+              fontSize: CHART_CONFIG.TICK_FONT_SIZE,
+              fontWeight: 600,
+            }}
             axisLine={false}
             tickLine={false}
-            width={45}
+            width={CHART_CONFIG.Y_AXIS_WIDTH}
             tickFormatter={(value) =>
-              Math.abs(value) >= 1000
-                ? `${(value / 1000).toFixed(value % 1000 === 0 ? 0 : 1)}k`
+              Math.abs(value) >= CHART_CONFIG.THOUSAND_THRESHOLD
+                ? `${(value / CHART_CONFIG.THOUSAND_THRESHOLD).toFixed(value % CHART_CONFIG.THOUSAND_THRESHOLD === 0 ? 0 : 1)}k`
                 : value
             }
           />
-
           <Tooltip
             content={<ChartTooltip />}
             cursor={{ stroke: color, strokeWidth: 2, strokeDasharray: '5 5' }}
           />
-
           <Area
             type="monotone"
             dataKey="profit"
             stroke={color}
             strokeWidth={2}
             fill="url(#profitGradient)"
-            dot={{ fill: color, stroke: '#fff', strokeWidth: 1.5, r: 4 }}
-            activeDot={{ r: 6, fill: '#fff', stroke: color, strokeWidth: 2 }}
-            animationDuration={1500}
+            dot={{
+              fill: color,
+              stroke: 'var(--chart-dot-contrast)',
+              strokeWidth: 1.5,
+              r: CHART_CONFIG.DOT_RADIUS,
+            }}
+            activeDot={{
+              r: CHART_CONFIG.ACTIVE_DOT_RADIUS,
+              fill: 'var(--chart-dot-contrast)',
+              stroke: color,
+              strokeWidth: 2,
+            }}
+            animationDuration={CHART_CONFIG.ANIMATION_DURATION_MS}
           />
         </AreaChart>
       </ResponsiveContainer>

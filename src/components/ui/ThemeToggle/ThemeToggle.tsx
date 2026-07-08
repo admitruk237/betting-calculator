@@ -1,4 +1,5 @@
 import { useTheme } from '@/context/ThemeContext'
+import { THEME_TOGGLE_TEXTS } from '@/constants'
 import styles from './ThemeToggle.module.css'
 
 export const ThemeToggle = () => {
@@ -9,8 +10,12 @@ export const ThemeToggle = () => {
     <button
       className={styles.toggle}
       onClick={toggleTheme}
-      aria-label={isLight ? 'Увімкнути темну тему' : 'Увімкнути світлу тему'}
-      title={isLight ? 'Темна тема' : 'Світла тема'}
+      aria-label={
+        isLight ? THEME_TOGGLE_TEXTS.ENABLE_DARK : THEME_TOGGLE_TEXTS.ENABLE_LIGHT
+      }
+      title={
+        isLight ? THEME_TOGGLE_TEXTS.DARK_TITLE : THEME_TOGGLE_TEXTS.LIGHT_TITLE
+      }
     >
       <span
         className={`${styles.thumb} ${isLight ? styles.thumbLight : styles.thumbDark}`}

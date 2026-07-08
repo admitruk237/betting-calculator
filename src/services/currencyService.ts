@@ -1,29 +1,39 @@
-export interface ExchangeRate {
+import {
+  NBU_EXCHANGE_URL,
+  API_ERROR_MESSAGES,
+  type CurrencyValue,
+} from '@/constants'
+
+interface ExchangeRate {
   cc: string
   rate: number
 }
 
-export const fetchCurrencyRates = async (): Promise<Record<string, number>> => {
-  const response = await fetch(
-    'https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json',
-  )
+const USD_CODE: CurrencyValue = 'USD'
+const EUR_CODE: CurrencyValue = 'EUR'
+const UAH_CODE: CurrencyValue = 'UAH'
+
+export const fetchCurrencyRates = async (): Promise<
+  Record<CurrencyValue, number>
+> => {
+  const response = await fetch(NBU_EXCHANGE_URL)
 
   if (!response.ok) {
-    throw new Error('Не вдалося завантажити курси валют')
+    throw new Error(API_ERROR_MESSAGES.RATES_FETCH_FAILED)
   }
 
   const data: ExchangeRate[] = await response.json()
 
-  const usd = data.find((item) => item.cc === 'USD')?.rate
-  const eur = data.find((item) => item.cc === 'EUR')?.rate
+  const usd = data.find((item) => item.cc === USD_CODE)?.rate
+  const eur = data.find((item) => item.cc === EUR_CODE)?.rate
 
   if (!usd || !eur) {
-    throw new Error('Курси для долара або євро відсутні в банку')
+    throw new Error(API_ERROR_MESSAGES.RATES_UNAVAILABLE)
   }
 
   return {
-    USD: 1 / usd,
-    EUR: 1 / eur,
-    UAH: 1,
+    [USD_CODE]: 1 / usd,
+    [EUR_CODE]: 1 / eur,
+    [UAH_CODE]: 1,
   }
 }

@@ -5,3 +5,6 @@ export const CURRENCIES = [
 ] as const
 
 export type CurrencyValue = (typeof CURRENCIES)[number]['value']
+
+export const isCurrencyValue = (value: string): value is CurrencyValue =>
+  CURRENCIES.some((currency) => currency.value === value)

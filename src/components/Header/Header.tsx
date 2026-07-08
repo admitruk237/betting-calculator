@@ -1,5 +1,6 @@
 import styles from './Header.module.css'
 import { AnimatedIcon, ThemeToggle } from '@/components/ui'
+import { HEADER_TEXTS } from '@/constants'
 import casinoChip from '@/assets/icons/casino-chip.json'
 
 export const Header = () => {
@@ -12,7 +13,7 @@ export const Header = () => {
           size={36}
         />
         <div className={styles.content}>
-          <h1 className={styles.heading}>Betting Calculator</h1>
+          <h1 className={styles.heading}>{HEADER_TEXTS.HEADING}</h1>
         </div>
         <div className={styles.actions}>
           <ThemeToggle />
